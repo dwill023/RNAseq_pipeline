@@ -20,7 +20,7 @@ Using the package [Trimmomatic](http://www.usadellab.org/cms/uploads/supplementa
 ```Shell
 module load trimmomatic/0.36
 
-trimmomatic SE -threads 4 <input fastq> <output fastq> LEADING:3 TRAILING:3 SLIDINGWINDOW:4:25 MINLEN:36
+trimmomatic SE -threads 4 <input fastq> <output fastq> LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
 ```
 This will perform the following in order:
 - Remove leading low quality or N bases (below quality 3)
