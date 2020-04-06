@@ -86,7 +86,7 @@ featureCounts -T 4 -a $GTF -g gene_name -o counts.txt <path to *.bam>
 # Simplify the counts to have only gene names and counts
 cat counts.txt | cut -f 1,6-20 > simple_counts.txt
 ```
-### Getting RPKM from raw counts
+#### Getting RPKM from raw counts
 In R
 ```R
 suppressPackageStartupMessages({
@@ -135,7 +135,19 @@ dim(counts.keep)
 write.csv(counts.keep, "RPKM.csv")
 ```
 ## Differential gene exression (DEG) analysis
-Using R package Deseq2 and following script in file DESeq2.R
+Using R package Deseq2 and following script in file DESeq2.R.
+
+Before beginning, create a metadata table in .csv format like the one below.
+
+| id            | treatment |
+|     :---:     |   :---:   |
+| control1      | control   |
+| control2      | control   |
+| control3      | control   |
+| Experiment1   | experiment|
+| Experiment2   | experiment|
+| Experiment3   | experiment|
+
 - PCA plot (Principal component analysis): A form of dimension reduction that converts the correlations (or lack of) among all samples an plots them onto a 2D plot. Samples that are highly correlated cluster together. Differences along the first axis (PC1) are more important than differences along the PC2 axis. A measure of the variance between samples. Heatmaps generated using the rlog transformation for samples < 30. For samples > 30 use the VST normalization. 
 - MA-plot: plot visualizes the gene expression differences between two samples. 
 - Volcano plot: Generates visualization similar to MA plot but with more details (pvalues, gene names.)
