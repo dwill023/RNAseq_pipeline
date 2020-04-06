@@ -8,7 +8,7 @@ High quality RNA should be used in library prep before sequencing. Below is what
 Alternatively, running the extracted RNA on an agarose gel (below) will be sufficient to assess RNA quality.
 ![Agarose gel](https://github.com/dwill023/RNAseq_pipeline/blob/master/RNA-seq%20Data%20Analysis_files/Image%20%5B1%5D.png)
 
-The below schematic is an overview of the RNAseq analyses performed in our lab. 
+Below is a schematic of a typical RNAseq analyses. 
 ![schematic](https://github.com/dwill023/RNAseq_pipeline/blob/master/RNA-seq%20Data%20Analysis_files/Untitled%20Diagram.jpg)
 
 The majority of the analysis (with the exception of differential expression) is performed in UCR's high performance commputing cluster (HPCC) which contains the software indicated.
