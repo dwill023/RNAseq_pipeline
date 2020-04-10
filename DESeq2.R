@@ -42,57 +42,6 @@ all(names(mycounts)[-1]==metadata$id) # check that the labeling of samples is th
 # Remove duplicated rows in Geneid column
 mycounts <- mycounts %>% distinct(Geneid, .keep_all = TRUE)
 
-# remove the first column from counts
-counts <- read.delim("counts.txt", sep = "\t")
-counts <- counts[c(1,6:18)]
-
-countdata <- counts[,-(1)]
-
-# Store Geneid as rownames
-rownames(countdata) <- counts[,1]
-genes <- countdata[,-(1)]
-head(countdata)
-colnames(genes)
-
-# obtain RPKM
-
-RPKM <- rpkm(genes, gene.length = countdata$Length)
-
-# Filter the RPKM for lowly expressed genes.
-# which RPKM are > 0.1. A threshold that keeps genes with a raw count ~ 1
-thresh <- RPKM > 0.1
-head(thresh)
-
-# Summary of how many TRUEs are in each row
-table(rowSums(thresh))
-# we would like to keep genes that have at least 2 TRUES in each row of thresh
-keep <- rowSums(thresh) >= 2
-
-# Subset the rows of countdata to keep the more highly expressed genes
-counts.keep <- countdata[keep,]
-summary(keep)
-dim(counts.keep)
-
-# Let's have a look and see whether our threshold of 0.1 does indeed correspond to a count of about 1.
-# We will look at the first sample
-plot(RPKM[,1],countdata[,1])
-# Let us limit the x and y-axis so we can actually look to see what is happening at the smaller counts
-plot(RPKM[,1],countdata[,1],ylim=c(0,50),xlim=c(0,3), abline(v=0.1))
-
-## Quality control After filtering out lowly expressed genes we can check
-#the sample data for quality by looking at the density distribution and raw
-#log-intensitites.
-
-# Get log2 counts per million
-logcounts <- rpkm(counts.keep, gene.length = counts.keep$Length, log=TRUE)
-# Check distributions of samples using boxplots, a blue horizontal line that corresponds to the median logCPM
-drawLines <- function() abline(h=median(logcounts),col="blue")
-boxplot(logcounts, ylab="Log2 RPKM",las=2, main= "Boxplots of log2RPKM"); drawLines()
-
-# export the logcounts into a file
-write.csv(logcounts, "RPKM.csv")
-
-
 #########  DEG Analysis ###################
 
 
@@ -270,7 +219,7 @@ ego <- enrichGO(gene           = genes3,
                 pvalueCutoff  = 0.01,
                 qvalueCutoff  = 0.05)
 
-dotplot(ego, showCategory = 25, font.size = 18, title = "Gene Enrichment Analysis within 2D_T75", split=".sign") + facet_grid(.~.sign)
+dotplot(ego, showCategory = 25, font.size = 18, title = "Gene Enrichment Analysis")
 emapplot(ego, showCategory = 25, font.size = 30)
 barplot(ego, showCategory = 25)
 
@@ -288,7 +237,7 @@ gse <- gseGO(geneList=gene_list3,
 
 head(gse)
 # visualization
-dotplot(gse, showCategory = 25, title = "Gene set enrichment in zero RPM", split=".sign") + facet_grid(.~.sign)
+dotplot(gse, showCategory = 25, title = "Gene set enrichment") 
 
 # Ridgeplot: plots the frequency of fold change values per gene within each set. Helps to view up/down-regulated pathways. 
 ridgeplot(gse) + labs(x = "enrichment distribution")
