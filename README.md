@@ -87,7 +87,7 @@ featureCounts -T 4 -a $GTF -g gene_name -o counts.txt <path to *.bam>
 cat counts.txt | cut -f 1,6-20 > simple_counts.txt
 ```
 #### Getting RPKM from raw counts
-In R
+In R, load count file which must have a column for the gene lengths.
 ```R
 suppressPackageStartupMessages({
   library(readr)
@@ -135,7 +135,7 @@ dim(counts.keep)
 write.csv(counts.keep, "RPKM.csv")
 ```
 ## Differential gene exression (DEG) analysis
-Using R package Deseq2 and following script in file DESeq2.R.
+Using R package Deseq2 and following script in [DESeq2.R](https://github.com/dwill023/RNAseq_pipeline/blob/master/DESeq2.R).
 
 Before beginning, create a metadata table in .csv format like the one below.
 
