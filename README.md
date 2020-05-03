@@ -13,7 +13,7 @@ Below is a schematic of a typical RNAseq analyses.
 
 The majority of the analysis (with the exception of differential expression) is performed in UCR's high performance commputing cluster (HPCC) which contains the software indicated.
 
-Once samples have been sequenced at a core facility, the reads are automatically trimmed of adapter sequences. However, low quality sequcences may exist (usually at the 3'end) which should be removed.
+Once samples have been sequenced and providing enough read depth according to [ENCODE](https://www.encodeproject.org/data-standards/rna-seq/long-rnas/). The reads are automatically trimmed of adapter sequences before uploding by the sequencing facility. However, low quality sequcences may exist (usually at the 3'end) which should be removed.
 
 ## Trimming low quality bases
 Using the package [Trimmomatic](http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf) in the HPCC as shown below. 
