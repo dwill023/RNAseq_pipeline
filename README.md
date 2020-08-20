@@ -46,7 +46,7 @@ Mouse: https://www.gencodegenes.org/mouse/
 First an index of the genome you plan to align against must be created.
 ```Shell
 module load hisat2/2.1.0
-hisat2-build <genome_file.fa> <path to where you want your index stored>
+hisat2-build <genome_file.fa> <basename of the index file>
 ```
 Run the alignment.
 hisat2 [options] -x <hisat2 index> -U <trimmed.fastq> -S <name of outfile> -k 1 --new-summary <name of summary file>
