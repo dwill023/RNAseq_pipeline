@@ -49,10 +49,10 @@ module load hisat2/2.1.0
 hisat2-build <genome_file.fa> <basename of the index file>
 ```
 Run the alignment.
-hisat2 [options] -x <hisat2 index> -U <trimmed.fastq> -S <name of outfile> -k 1 --new-summary <name of summary file>
+hisat2 [options] -x <hisat2 index> -U <trimmed.fastq> -S <name of outfile> -k 1 --summary-file <name of summary file>
 - -k: searches for at most 1 distinct, primary alinment for each read. The default is 5.
 ```Shell
-hisat2 -p 10 -x <hisat2 index> -U <trimmed.fastq> -S <name of outfile> -k 1 --new-summary <name of summary file>
+hisat2 -p 10 -x <hisat2 index basename> -U control.fastq.gz -S control.sam -k 1 --summary-file control.txt
 ```
 For multiple files use a shell script (hisat2_align.sh) to run the multiple fastq files in succession.
 
