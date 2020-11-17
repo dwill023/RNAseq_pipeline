@@ -87,6 +87,9 @@ featureCounts -T 4 -a $GTF -g gene_name -o counts.txt <path to *.bam>
 cat counts.txt | cut -f 1,6-20 > simple_counts.txt
 ```
 #### Getting RPKM from raw counts
+Normalizing counts by RPKM/CPM/TPM is good for comparing genes within a sample. It is not good for comparing **between** samples. This is because these normalizations assume RNA abundance and distributions are similar across compared samples. See this (article)[https://rnajournal.cshlp.org/content/early/2020/04/13/rna.074922.120] discussing misuse of RPKM/TPM.
+
+The below code will provide RPKM normalization if needed.
 In R, load count file which must have a column for the gene lengths.
 ```R
 suppressPackageStartupMessages({
@@ -134,6 +137,10 @@ dim(counts.keep)
 # export the logcounts into a file
 write.csv(counts.keep, "RPKM.csv")
 ```
+#### To get normalized counts
+To obtain normalized counts for comparisons between samples, DESeq2 has a function that normalizes counts divided by sample-specific size factors. These size factors are determined by median ratio of gene counts relative to geometric mean per gene. See the [DESeq2.R](https://github.com/dwill023/RNAseq_pipeline/blob/master/DESeq2.R) file.
+
+
 ## Differential gene exression (DEG) analysis
 Using R package Deseq2 and following script in [DESeq2.R](https://github.com/dwill023/RNAseq_pipeline/blob/master/DESeq2.R).
 
