@@ -87,7 +87,7 @@ featureCounts -T 4 -a $GTF -g gene_name -o counts.txt <path to *.bam>
 cat counts.txt | cut -f 1,6-20 > simple_counts.txt
 ```
 #### Getting RPKM from raw counts
-Normalizing counts by RPKM/CPM/TPM is good for comparing genes within a sample. It is not good for comparing **between** samples. This is because these normalizations assume RNA abundance and distributions are similar across compared samples. See this (article)[https://rnajournal.cshlp.org/content/early/2020/04/13/rna.074922.120] discussing misuse of RPKM/TPM.
+Normalizing counts by RPKM/CPM/TPM is good for comparing genes within a sample. It is not good for comparing **between** samples. This is because these normalizations assume RNA abundance and distributions are similar across compared samples. See this [article](https://rnajournal.cshlp.org/content/early/2020/04/13/rna.074922.120) discussing misuse of RPKM/TPM.
 
 The below code will provide RPKM normalization if needed.
 In R, load count file which must have a column for the gene lengths.
