@@ -39,6 +39,11 @@ metadata <- as.data.frame(metadata)
 
 all(names(mycounts)[-1]==metadata$id) # check that the labeling of samples is the same in the count matrix and metadata file
 
+# if not the same reorder the metadata rownames to match the count columns
+idx <- match(colnames(mycounts), rownames(metadata))
+reordered_metadata <- metadata[idx, ]
+view(reordered_metadata)
+
 # Remove duplicated rows in Geneid column
 mycounts <- mycounts %>% distinct(Geneid, .keep_all = TRUE)
 
@@ -51,6 +56,12 @@ dds <- DESeqDataSetFromMatrix(countData=mycounts,
                               design=~treatment, 
                               tidy=TRUE)
 dds
+
+# obtain the normalized counts for between sample comparisons. RPKM normalization is good for gene count comparisons between genes within a sample, not between samples.
+dds <- estimateSizeFactors(dds)
+normalized_counts <- counts(dds, normalized=TRUE)
+view(normalized_counts)
+
 
 dds <- DESeq(dds)
 # pre-filtering the dataset. Removes rows that have no or nearly no information about the amount of gene expression by removing rows that have no counts or only a single count across all samples. 
@@ -66,7 +77,7 @@ dds <- DESeq(dds)
 #rlog and variance: transformations for count data that stabilize the variance across the mean: the regularized-logarithm transformation or rlog
 # rlog tends to work well on small datasets (n < 30), sometimes outperforming the VST when there is a large range of sequencing depth across samples (an order of magnitude difference). 
 
-rld <- rlog(dds, blind = FALSE) # blind = FALSE, which means that differences between cell lines and treatment (the variables in the design) will not contribute to the expected variance-mean trend of the experiment.
+rld <- rlog(dds, blind = TRUE) # If blind = FALSE, means that differences between cell lines and treatment (the variables in the design) will not contribute to the expected variance-mean trend of the experiment.
 head(assay(rld), 3)
 
 # to take out only specific treatments you want to compare on heatmap
