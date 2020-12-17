@@ -15,8 +15,15 @@ The majority of the analysis (with the exception of differential expression) is 
 
 Once samples have been sequenced and providing enough read depth according to [ENCODE](https://www.encodeproject.org/data-standards/rna-seq/long-rnas/). The reads are automatically trimmed of adapter sequences before uploding by the sequencing facility. However, low quality sequcences may exist (usually at the 3'end) which should be removed.
 
+In order to observe the quality of the bases read quality reports can be generated.  [MultiQC](https://multiqc.info/) will generate such reports and can be run after read alignment and counting to provide an overall quality report.
+Run MultiQC in the main directory containing the fastq files:
+```Shell
+conda activate bioinfo
+multiqc .
+```
+
 ## Trimming low quality bases
-Using the package [Trimmomatic](http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf) in the HPCC as shown below. 
+If trimming is needed the package [Trimmomatic](http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf) can be run as shown below:
 ```Shell
 module load trimmomatic/0.36
 
@@ -28,12 +35,8 @@ This will perform the following in order:
 - Scan the read with a 4-base wide sliding window, cutting when the average quality per base drops below 25
 - Drop reads which are less than 36 bases long after these steps
 
-After trimming the low quality reads, run fastQC to check the quality stats.
-```Shell
-module load fastqc/0.11.7
+After trimming the low quality reads, re-run MultiQC to check the quality stats.
 
-fastqc <trimmed.fastq> 
-```
 This will output the quality stats into an html file. Check that the low quality bases, read length and 'N' sequences have been removed.
 
 ## Align reads to the genome
