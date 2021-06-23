@@ -17,8 +17,9 @@ Once samples have been sequenced and providing enough read depth according to [E
 
 In order to observe the quality of the bases read quality reports can be generated.  [MultiQC](https://multiqc.info/) will generate such reports and can be run after read alignment and counting to provide an overall quality report.
 Run MultiQC in the main directory containing the fastq files:
-```Shell
+
 <p class="codeblock-label">cmd</p>
+```Shell
 conda activate bioinfo
 multiqc .
 ```
