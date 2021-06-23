@@ -19,7 +19,8 @@ In order to observe the quality of the bases read quality reports can be generat
 Run MultiQC in the main directory containing the fastq files:
 
 <p class="codeblock-label">cmd</p>
-```Shell
+
+```markdown
 conda activate bioinfo
 multiqc .
 ```
