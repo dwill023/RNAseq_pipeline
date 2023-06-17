@@ -11,17 +11,13 @@ Alternatively, running the extracted RNA on an agarose gel (below) will be suffi
 Below is a schematic of a typical RNAseq analyses. 
 ![schematic](https://github.com/dwill023/RNAseq_pipeline/blob/master/RNA-seq%20Data%20Analysis_files/Untitled%20Diagram.jpg)
 
-The majority of the analysis (with the exception of differential expression) is performed in UCR's high performance commputing cluster (HPCC) which contains the software indicated.
+# Workflow Option
 
-Once samples have been sequenced and providing enough read depth according to [ENCODE](https://www.encodeproject.org/data-standards/rna-seq/long-rnas/). The reads are automatically trimmed of adapter sequences before uploding by the sequencing facility. However, low quality sequcences may exist (usually at the 3'end) which should be removed.
+An automatic way to process the raw reads from quality analysis to read counting can be performed using shell script
 
-In order to observe the quality of the bases read quality reports can be generated.  [MultiQC](https://multiqc.info/) will generate such reports and can be run after read alignment and counting to provide an overall quality report.
-Run MultiQC in the main directory containing the fastq files:
+# Step-by-Step Option
 
-```Powershell
-conda activate bioinfo
-multiqc .
-```
+The below outlines the individual steps taken to process the raw reads. These steps go into detail about what is occurring in the automatic workflow and can also be followed to get the same results.
 
 ## Trimming low quality bases
 If trimming is needed the package [Trimmomatic](http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf) can be run as shown below:
@@ -145,7 +141,7 @@ write.csv(counts.keep, "RPKM.csv")
 To obtain normalized counts for comparisons between samples, DESeq2 has a function that normalizes counts divided by sample-specific size factors. These size factors are determined by median ratio of gene counts relative to geometric mean per gene. See the [DESeq2.R](https://github.com/dwill023/RNAseq_pipeline/blob/master/DESeq2.R) file.
 
 
-## Differential gene exression (DEG) analysis
+# Differential gene exression (DEG) analysis
 Using R package Deseq2 and following script in [DESeq2.R](https://github.com/dwill023/RNAseq_pipeline/blob/master/DESeq2.R).
 
 Before beginning, create a metadata table in .csv format like the one below.
