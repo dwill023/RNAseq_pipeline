@@ -34,9 +34,9 @@ Before you run the shell script make sure you have:
 1. The raw reads in a directory called reads/
 2. A reference genome and a genome annotation file (.gtf) in a directory called refs/
 3. The ids.txt containing the names of the raw sequencing files.
-4. Amend the script with the name of your genome and annotation files on lines 9 and 12.
-   REF=refs/your_genome_file.fa
-   GTF=refs/your_annotation_file.gtf
+4. Amend the script with the name of your genome and annotation files on:
+  - line 9 : REF=refs/your_genome_file.fa
+  - line 12 : GTF=refs/your_annotation_file.gtf
 5. If you have paired end reads amend the MODE with PE in the script at line 21.   
 
 Run the script in the same directory where the hisat2.mk file is.
