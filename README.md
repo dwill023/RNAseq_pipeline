@@ -27,13 +27,31 @@ The script then takes the ids.txt file and runs the following steps:
   - MODE : SE or PE for single-end or paired-end reads
   - REF : Path to the genomic reference (.fa) file in a directory called refs/
   - IDX : Path to the indexed genome file stored in a directory the refs/idx, if available. If not the script will automatically create an index.
-3.   
+3.  Generates counts of the reads using Subread's featurecounts function.
+4. Runs MultiQC to output the metrics of the read quality, alignment and read counts.
+
+Before you run the shell script make sure you have:
+1. The raw reads in a directory called reads/
+2. A reference genome and a genome annotation file (.gtf) in a directory called refs/
+3. The ids.txt containing the names of the raw sequencing files.
+4. Amend the script with the name of your genome and annotation files on lines 9 and 12.
+   REF=refs/your_genome_file.fa
+   GTF=refs/your_annotation_file.gtf
+5. If you have paired end reads amend the MODE with PE in the script at line 21.   
+
+Run the script in the same directory where the hisat2.mk file is.
+```
+bash rna-seq-hisat2-workflow.sh
+```
+
+After the counts file is generated follow the section [Differential gene exression (DEG) analysis](https://github.com/dwill023/RNAseq_pipeline/tree/master#differential-gene-exression-deg-analysis).
+
 
 # Step-by-Step Option
 
-The below outlines the individual steps taken to process the raw reads. These steps go into detail about what is occurring in the automatic workflow and can also be followed to get the same results.
+The below outlines the individual steps taken in the workflow. These steps go into detail about what is occurring in the automatic workflow and can also be followed to get the same results.
 
-## Trimming low quality bases
+## Trimming low quality bases (optional, not part of workflow)
 If trimming is needed the package [Trimmomatic](http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf) can be run as shown below:
 ```Shell
 module load trimmomatic/0.36
