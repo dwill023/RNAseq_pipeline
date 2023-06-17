@@ -1,30 +1,24 @@
-#RNA-seq workflow: 
-# https://www.bioconductor.org/help/workflows/rnaseqGene/#top
 
-# Clear plots
-if(!is.null(dev.list())) dev.off()
-# Clear console
-cat("\014") 
-# Clean workspace
-rm(list=ls())
-# Set working directory
-setwd()
-
-
+# Differential gene expressing analysis
 ## Using DESeq2 
 
 # For analysis of RNA-seq data. Preparing count matrices: Using the featureCounts function (Liao, Smyth, and Shi 2013) in the Rsubread package. The DESeq2 model internally corrects for library size, so transformed or normalized values such as counts scaled by library size should not be used as input.
-suppressPackageStartupMessages({
-  library(readr)
-  library(dplyr)
-  library(ggplot2)
-  library(DESeq2)
-  library(edgeR)
-  library(limma)
-  library(Glimma)
-  library(gplots)
-  library(RColorBrewer)
-})
+
+pacman::p_load(
+  readr,
+  dplyr,
+  ggplot2,
+  DESeq2,
+  gplots,
+  RColorBrewer,
+  genefilter,
+  pheatmap,
+  EnhancedVolcano,
+  clusterProfiler,
+  enrichplot,
+  org.Hs.eg.db, # for human genome
+  org.Mm.eg.db # for mouse genome
+)
 
 
 mycounts <- read.delim("simple_counts.txt", sep = "\t") # load count matrices 
@@ -89,8 +83,7 @@ head(assay(rld), 3)
 plotPCA(rld, intgroup = c("treatment")) + geom_text(aes(label=name),vjust=2)
 
 # Clustering and heat maps
-library("genefilter")
-library(pheatmap)
+
 
 topVarGenes <- head(order(rowVars(assay(rld)), decreasing = TRUE), 100) #a subset of the most highly variable genes.
 
@@ -156,7 +149,7 @@ plotMA(res_60,ylim=c(-3,3), cex=.8, alpha = 0.05, main="60 RPM vs Control")
 abline(h=c(-1,1), col="dodgerblue", lwd=2)
 
 # Make a awesome volcano plots
-library(EnhancedVolcano)
+
 # The default cut-off for log2FC is >|2|; the default cut-off for P value is 10e-6.
 EnhancedVolcano(res_0,
                 lab = rownames(res_0),
@@ -173,11 +166,6 @@ EnhancedVolcano(res_0,
 #analysis (gseGO) takes differential data from every measured gene and looks for
 #pathways displaying significantly co-ordinated shifts in those values.
 
-library(clusterProfiler)
-library(enrichplot)
-# we use ggplot2 to add x axis labels (ex: ridgeplot)
-library(ggplot2)
-library(org.Hs.eg.db)
 keytypes(org.Hs.eg.db)
 
 # use sigres data frame for GO
