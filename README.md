@@ -13,7 +13,21 @@ Below is a schematic of a typical RNAseq analyses.
 
 # Workflow Option
 
-An automatic way to process the raw reads from quality analysis to read counting can be performed using shell script
+An automatic way to process the raw reads from quality analysis to read counting can be performed using a [shell script](https://github.com/dwill023/RNAseq_pipeline/blob/master/rna-seq-hisat2-workflow.sh) that can take a list of your raw files and process them in parallel. The script takes a ids.txt file containing the root names of the raw sequencing file. For example if your files are sample_1.fastq.gz, sample_2.fastq.gz and so on, the ids.txt file should have each file name on a new line like so:
+
+```
+sample_1
+sample_2
+```
+The script then takes the ids.txt file and runs the following steps:
+
+1. Generate read quality files using fastqc.
+2. Read alignment with HISAT2 using a separate makefile [hisat2.mk](https://github.com/dwill023/RNAseq_pipeline/blob/master/hisat2.mk) that contains parameters to align the file. 
+  - NCPU : The number of CPUs to use, default is 4
+  - MODE : SE or PE for single-end or paired-end reads
+  - REF : Path to the genomic reference (.fa) file in a directory called refs/
+  - IDX : Path to the indexed genome file stored in a directory the refs/idx, if available. If not the script will automatically create an index.
+3.   
 
 # Step-by-Step Option
 
